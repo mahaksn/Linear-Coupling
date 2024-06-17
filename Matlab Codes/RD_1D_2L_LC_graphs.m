@@ -138,7 +138,16 @@ yb=simplify(ybnum/y3)
 [ygN,ygD]=numden(simplify(y1*y2*y3-y1*y1-y3*y3*y0));
 ygnum=ygN/ygD;
 yg=simplify(ygnum/ybnum)
-none
+
+%% 
+disp('Linear stability with coupling but without diffusion')
+y30=subs(y3,k,0)
+y20=subs(y2,k,0)
+y10=subs(y1,k,0)
+y00=subs(y0,k,0)
+yb0=subs(yb,k,0)
+yg0=subs(yg,k,0)
+
 %% Dispersion relation: 
 clear Mr Mi
 nn=100;
