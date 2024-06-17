@@ -135,10 +135,10 @@ AvL = I - dt*Lap_vL;
 pit=0; rng(pit); %change random seed
 Perturbations = 0.01*(2*rand(nx,1)-1);
 
-uU=uU00 + Perturbations;
-vU=vU00 + Perturbations;
-uL=uL00 + Perturbations;
-vL=vL00 + Perturbations;
+uU=uU0 + Perturbations;
+vU=vU0 + Perturbations;
+uL=uL0 + Perturbations;
+vL=vL0 + Perturbations;
 
 %% Numerical Simulation
 if GetPatterns
