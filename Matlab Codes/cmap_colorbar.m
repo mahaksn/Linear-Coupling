@@ -15,6 +15,7 @@ end
 cmap(cmap_idx,:) = cmap(cmap_idx-1,:);
 % apply the colormap, create the colorbar, and set the ticks to lvls:
 colormap(cmap);
-cb = colorbar('off');
+cb = colorbar();
 cb.Ticks = lvls;
+colorbar('off')
 end
