@@ -134,10 +134,10 @@ y2=cfsCPk(3)
 y1=cfsCPk(4)
 y0=cfsCPk(5)
 ybnum=simplify(y3*y2-y1);
-yb=simplify(ybnum/y3)
+yb=simplify(ybnum/y3)   % yb - ybeta
 [ygN,ygD]=numden(simplify(y1*y2*y3-y1*y1-y3*y3*y0));
 ygnum=ygN/ygD;
-yg=simplify(ygnum/ybnum)
+yg=simplify(ygnum/ybnum)   % yg - ygamma
 
 %% 
 disp('Linear stability with coupling but without diffusion')
