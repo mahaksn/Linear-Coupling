@@ -314,6 +314,7 @@ xlabel('k','FontSize',16);
 ylabel('max(Re(\lambda))','FontSize',16);
 title(['\eta=',num2str(erp(j))],'FontSize',16)
 ylim([-1.5,0.5])
+xlim([0,1])
 ax = gca; 
 ax.FontSize = 16;
 saveas(f5,['eta=',num2str(erp(j)),'.fig']);
