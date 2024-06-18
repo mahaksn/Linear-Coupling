@@ -24,7 +24,7 @@ case2=1; % non-dimensionalised
 
 T=5*10^3;
 nx=200;
-tol=1e-10;
+tol=1e-7;
 
 tend=100;
 
@@ -53,24 +53,9 @@ elseif case2
 end
 end
 
-%%
-e1=linspace(0,0.17,nx/4);
-e2=linspace(0.17,0.43,nx/4+1);
-e3=linspace(0.43,3.77,nx/4+1);
-e4=linspace(3.77,10,nx/4+1);
-eta=[e1 e2(2:end) e3(2:end) e4(2:end)];
-
-for e=1:length(eta)
-eta_u = eta(e);
-eta_v = eta_u; % fixed
-pattern=1; % Pattern fully developed at..
-tend=100;
-
 %% saving
-eta_text=['_eta=',num2str(eta(e))];
 [filename,folder] = savingcode(RD,dim,suffix,layer);
-prefix = strcat(filename,...
-    eta_text);
+prefix = strcat(filename);
 prefix = strcat(folder, prefix);
 
 %% saving code
@@ -91,6 +76,19 @@ fprintf(['\nInitial Steady States for\n' ...
     'layer_1 are: uU0=%.5f, vU0=%.5f\n'...
     'layer_2 are: uL0=%.5f, vL0=%.5f\n'], ...
     uU0,vU0,uL0,vL0);
+
+%%
+e1=linspace(0,0.17,nx/4);
+e2=linspace(0.17,0.43,nx/4+1);
+e3=linspace(0.43,3.77,nx/4+1);
+e4=linspace(3.77,10,nx/4+1);
+eta=[e1 e2(2:end) e3(2:end) e4(2:end)];
+
+for e=1:length(eta)
+eta_u = eta(e);
+eta_v = eta_u; % fixed
+pattern=1; % Pattern fully developed at..
+tend=100;
 
 %% domain setting
 x=linspace(0,L,nx)';
@@ -153,7 +151,7 @@ if showanimation
     uUfig=plot(x,uU,'Linewidth',3);
     vUfig=plot(x,vU,'Linewidth',3);
     ylim([0,4]);
-    xlabel('x');
+    xlabel('$x$','Interpreter','latex');
     ylabel('u,v');
     legend('u_1','v_1')
     figtitle1=title('t=0');
@@ -165,7 +163,7 @@ if showanimation
     uLfig=plot(x,uL,'Linewidth',3);
     vLfig=plot(x,vL,'Linewidth',3);
     ylim([0,4]);
-    xlabel('x');
+    xlabel('$x$','Interpreter','latex');
     ylabel('u,v');
     legend('u_2','v_2')
     figtitle2=title('t=0');
@@ -261,10 +259,13 @@ end
 %% saving final pattern
 
 if showanimation
-saveas(figU,[prefix,'_finalU.png']);
-saveas(figU,[prefix,'_finalU.fig']);
-saveas(figL,[prefix,'_finalL.png']);
-saveas(figL,[prefix,'_finalL.fig']);
+    eval=round(eta(e),4);
+    fprintf(' for eta=%.4f',eval);
+    eval=num2str(eval);
+saveas(figU,[prefix,'_eta=',eval,'_finalU.png']);
+saveas(figU,[prefix,'_eta=',eval,'_finalU.fig']);
+saveas(figL,[prefix,'_eta=',eval,'_finalL.png']);
+saveas(figL,[prefix,'_eta=',eval,'_finalL.fig']);
 end
 end
 
@@ -273,9 +274,9 @@ axx=[0,0.17,0.43,3.77,10];
 
 f1=figure; surf(x,categorical(eta),u1,'linestyle','none')
 view(2)
-xlabel('x')
-ylabel('\eta')
-title('u_1')
+xlabel('$x$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
+title('${\bf u_1}$','Interpreter','latex')
 colorbar
 set(gca,'ytick',categorical(axx))
 ax = gca; 
@@ -284,24 +285,24 @@ saveas(f1,'u1_pattern_trans.fig');
 saveas(f1,'u1_pattern_trans.png');
 
 %%
-f2=figure; surf(x,categorical(eta),v1,'linestyle','none')
-view(2)
-xlabel('x')
-ylabel('\eta')
-title('v_1')
-colorbar
-set(gca,'ytick',categorical(axx))
-ax = gca; 
-ax.FontSize = 16; 
-saveas(f2,'v1_pattern_trans.fig');
-saveas(f2,'v1_pattern_trans.png');
+% f2=figure; surf(x,categorical(eta),v1,'linestyle','none')
+% view(2)
+% xlabel('$x$','Interpreter','latex')
+% ylabel('$\eta$','Interpreter','latex')
+% title('${\bf v_1}$','Interpreter','latex')
+% colorbar
+% set(gca,'ytick',categorical(axx))
+% ax = gca; 
+% ax.FontSize = 16; 
+% saveas(f2,'v1_pattern_trans.fig');
+% saveas(f2,'v1_pattern_trans.png');
 
 %%
 f3=figure; surf(x,categorical(eta),u2,'linestyle','none')
 view(2)
-xlabel('x')
-ylabel('\eta')
-title('u_2')
+xlabel('$x$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
+title('${\bf u_2}$','Interpreter','latex')
 colorbar
 set(gca,'ytick',categorical(axx))
 ax = gca; 
@@ -310,17 +311,17 @@ saveas(f3,'u2_pattern_trans.fig');
 saveas(f3,'u2_pattern_trans.png');
 
 %%
-f4=figure; surf(x,categorical(eta),v2,'linestyle','none')
-view(2)
-xlabel('x')
-ylabel('\eta')
-title('v_2')
-colorbar
-set(gca,'ytick',categorical(axx))
-ax = gca; 
-ax.FontSize = 16; 
-saveas(f4,'v2_pattern_trans.fig');
-saveas(f4,'v2_pattern_trans.png');
+% f4=figure; surf(x,categorical(eta),v2,'linestyle','none')
+% view(2)
+% xlabel('$x$','Interpreter','latex')
+% ylabel('$\eta$','Interpreter','latex')
+% title('${\bf v_2}$','Interpreter','latex')
+% colorbar
+% set(gca,'ytick',categorical(axx))
+% ax = gca; 
+% ax.FontSize = 16; 
+% saveas(f4,'v2_pattern_trans.fig');
+% saveas(f4,'v2_pattern_trans.png');
 
 %%
 fprintf('\nDone!\n');
