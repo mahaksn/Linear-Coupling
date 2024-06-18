@@ -251,8 +251,8 @@ yline(categorical(3.77),'r--','Linewidth',2)
 
 cmap_colorbar()
 
-saveas(f3,'DCy(k,eta)_shrunk.fig');
-saveas(f3,'DCy(k,eta)_shrunk.png');
+saveas(f3,'DCy(k,eta)_scaled.fig');
+saveas(f3,'DCy(k,eta)_scaled.png');
 
 %% y_0(k,eta): Scaled
 clear RHv
@@ -289,8 +289,8 @@ yline(categorical(3.77),'r--','Linewidth',2)
 
 cmap_colorbar()
 
-saveas(f4,'y_0(k,eta)_shrunk.fig');
-saveas(f4,'y_0(k,eta)_shrunk.png');
+saveas(f4,'y_0(k,eta)_scaled.fig');
+saveas(f4,'y_0(k,eta)_scaled.png');
 
 %% Dispersion curves at different \eta values
 clear Mr Mi
