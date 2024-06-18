@@ -209,9 +209,9 @@ end
 er=e_disc(p);
 p1=find(e_disc(p)>0);
 erp=er(p1);
-erp=[0 erp' 10];
 disp('Roots of the discriminant are:')
 disp(erp)
+erp=[0 erp' 10];
 erp=round(erp,2);
 erpP=solve(P==0,eta);
 erpD=solve(D==0,eta);
