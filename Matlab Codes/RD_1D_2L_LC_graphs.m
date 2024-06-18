@@ -157,9 +157,9 @@ eta0=linspace(0,eta_end,nn)';
 Mr=dispersion(CPy,k,eta,k0,eta0);
 f1=figure; 
 surf(k0,eta0,Mr,'linestyle','none');
-xlabel('k')
-ylabel('\eta')
-title('Max(Re(\lambda))')
+xlabel('$k$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
+title('max(Re(\lambda))')
 clim([-0.1,0.1])
 view(2)
 shading interp
@@ -182,15 +182,15 @@ eta0=linspace(0,eta_end,nn)';
 
 f2=figure; 
 surf(k00,eta00,RHv,'linestyle','none')
-xlabel('k')
-ylabel('\eta')
-zlabel('y_{0}(k,\eta)')
-title('y_{0}(k,\eta)')
+xlabel('$k$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
+zlabel('$y_0(k,\eta)$','Interpreter','latex')
+title('{\boldmath$y_0(k,\eta)$}','Interpreter','latex')
 clim([-1,1])
 % view(2)
 shading interp
 ax = gca; 
-ax.FontSize = 18;
+ax.FontSize = 24;
 
 cmap_colorbar()
 
@@ -234,9 +234,9 @@ Mr=dispersion(CPy,k,eta,k0,eta0s);
 axx=[0,0.17,0.43,1.41,3.77,10]; 
 f3=figure; 
 surf(k0,categorical(eta0s),Mr,'linestyle','none');
-xlabel('k')
-ylabel('\eta')
-title('Max(Re(\lambda))')
+xlabel('$k$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
+title('max(Re(\lambda))')
 clim([-0.1,0.1])
 view(2)
 shading interp
@@ -270,10 +270,10 @@ eta0s=[e1 e2(2:end) e3(2:end) e4(2:end) e5(2:end)]'; %
 
 f4=figure; 
 surf(k00,categorical(eta00),RHv,'linestyle','none')
-xlabel('k')
-ylabel('\eta')
-zlabel('y_{0}(k,\eta)')
-title('y_{0}(k,\eta)')
+xlabel('$k$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
+zlabel('$y_0(k,\eta)$','Interpreter','latex')
+title('{\boldmath$y_0(k,\eta)$}','Interpreter','latex')
 clim([-1,1])
 view(2)
 shading interp
@@ -310,13 +310,13 @@ f5=figure;
 hold on
 plot(k0,Mr,'Linewidth',3);
 yline(0,'r--','HandleVisibility', 'off','Linewidth',3);
-xlabel('k','FontSize',16);
-ylabel('max(Re(\lambda))','FontSize',16);
-title(['\eta=',num2str(erp(j))],'FontSize',16)
+xlabel('$k$','Interpreter','latex');
+ylabel('max(Re(\lambda))');
+title(['\eta=',num2str(erp(j))])
 ylim([-1.5,0.5])
 xlim([0,1])
 ax = gca; 
-ax.FontSize = 16;
+ax.FontSize = 18;
 saveas(f5,['eta=',num2str(erp(j)),'.fig']);
 saveas(f5,['eta=',num2str(erp(j)),'.png']);
 end
@@ -350,8 +350,8 @@ eta0s=[e1 e2(2:end) e3(2:end) e4(2:end) e5(2:end)]'; %
 
 f6=figure; 
 surf(k00,categorical(eta00),RHv,'linestyle','none')
-xlabel('k')
-ylabel('\eta')
+xlabel('$k$','Interpreter','latex')
+ylabel('$\eta$','Interpreter','latex')
 % zlabel('y_{r_0}(k,\eta)')
 % title('y_{r_0}(k,\eta)')
 clim([-1,1])
@@ -361,11 +361,6 @@ axx=[0,0.17,0.43,1.41,3.77,10]; %
 set(gca,'ytick',categorical(axx))
 ax = gca; 
 ax.FontSize = 18;
-
-yline(categorical(0.17),'r--','Linewidth',2)
-yline(categorical(0.43),'r--','Linewidth',2)
-yline(categorical(1.41),'r--','Linewidth',2)
-yline(categorical(3.77),'r--','Linewidth',2)
 
 cmap_colorbar()
 
@@ -397,7 +392,7 @@ hold on
 plot(k0,sss,'--','LineWidth',3)
 
 ylim([-1000,1000])
-xlabel('k')
+xlabel('$k$','Interpreter','latex')
 % ylabel('y_{r_0}')
 title('\eta=10')
 xlim([0,1])
@@ -427,8 +422,8 @@ disp(CPredk)
 % 
 % f2=figure; 
 % surf(k0,eta0,Mr,'linestyle','none');
-% xlabel('k')
-% ylabel('\eta')
+% xlabel('$k$','Interpreter','latex')
+% ylabel('$\eta$','Interpreter','latex')
 % title('Reduced Dispersion relation')
 % clim([-0.1,0.1])
 % view(2)
