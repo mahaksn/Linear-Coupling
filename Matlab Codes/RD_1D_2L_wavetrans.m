@@ -277,6 +277,7 @@ view(2)
 xlabel('$x$','Interpreter','latex')
 ylabel('$\eta$','Interpreter','latex')
 title('${\bf u_1}$','Interpreter','latex')
+xlim([0,L])
 colorbar
 set(gca,'ytick',categorical(axx))
 ax = gca; 
@@ -290,6 +291,7 @@ saveas(f1,'u1_pattern_trans.png');
 % xlabel('$x$','Interpreter','latex')
 % ylabel('$\eta$','Interpreter','latex')
 % title('${\bf v_1}$','Interpreter','latex')
+% xlim([0,L])
 % colorbar
 % set(gca,'ytick',categorical(axx))
 % ax = gca; 
@@ -303,6 +305,7 @@ view(2)
 xlabel('$x$','Interpreter','latex')
 ylabel('$\eta$','Interpreter','latex')
 title('${\bf u_2}$','Interpreter','latex')
+xlim([0,L])
 colorbar
 set(gca,'ytick',categorical(axx))
 ax = gca; 
@@ -316,6 +319,7 @@ saveas(f3,'u2_pattern_trans.png');
 % xlabel('$x$','Interpreter','latex')
 % ylabel('$\eta$','Interpreter','latex')
 % title('${\bf v_2}$','Interpreter','latex')
+% xlim([0,L])
 % colorbar
 % set(gca,'ytick',categorical(axx))
 % ax = gca; 
