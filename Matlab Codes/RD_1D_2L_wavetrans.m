@@ -17,8 +17,8 @@ pattern=1; % Pattern fully developed at..
 
 Schnakenberg=1;
 
-case1=0;
-case2=1; % non-dimensionalised
+case1=1;
+case2=0; % non-dimensionalised
 
 %% set the parameters which govern equation
 
