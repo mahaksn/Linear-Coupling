@@ -55,12 +55,11 @@ end
 
 %% saving
 [filename,folder] = savingcode(RD,dim,suffix,layer);
-prefix = strcat(filename);
-prefix = strcat(folder, prefix);
+prefix = strcat(folder, filename);
 
 %% saving code
 options = struct('format','pdf', ...
-    'outputDir',prefix, ...
+    'outputDir',folder, ...
     'codeToEvaluate','0;');
 publish(pdfname,options);
 diary([prefix,'.txt']);
@@ -141,8 +140,11 @@ vL=vL0 + Perturbations;
 %% Numerical Simulation
 if GetPatterns
 %% Set up figure
-giffile1 = [prefix,'_1','.gif'];
-giffile2 = [prefix,'_2','.gif'];
+eval=round(eta(e),4);
+fprintf('\nFor eta=%.4f,',eval);
+eval=num2str(eval);
+giffile1 = [folder,'pattern_eta=',eval,'_1','.gif'];
+giffile2 = [folder,'pattern_eta=',eval,'_2','.gif'];
 if showanimation
     fig_pos = [100 100 1000 500];
     figU=figure('Position',fig_pos,'color','w');
@@ -241,7 +243,7 @@ for ti=1:1:nt
 
     if all(PFD)
         pattern=0;
-        fprintf('\npattern fully developed at %.5f\n',t);
+        fprintf(' pattern fully developed at %.5f\n',t);
         tend=tend/dt+1;
         stopti=ti+tend;
     end
@@ -259,13 +261,10 @@ end
 %% saving final pattern
 
 if showanimation
-    eval=round(eta(e),4);
-    fprintf(' for eta=%.4f',eval);
-    eval=num2str(eval);
-saveas(figU,[prefix,'_eta=',eval,'_finalU.png']);
-saveas(figU,[prefix,'_eta=',eval,'_finalU.fig']);
-saveas(figL,[prefix,'_eta=',eval,'_finalL.png']);
-saveas(figL,[prefix,'_eta=',eval,'_finalL.fig']);
+saveas(figU,[folder,'pattern_eta=',eval,'_1.png']);
+saveas(figU,[folder,'pattern_eta=',eval,'_1.fig']);
+saveas(figL,[folder,'pattern_eta=',eval,'_2.png']);
+saveas(figL,[folder,'pattern_eta=',eval,'_2.fig']);
 end
 end
 
@@ -282,8 +281,8 @@ colorbar
 set(gca,'ytick',categorical(axx))
 ax = gca; 
 ax.FontSize = 16;
-saveas(f1,'u1_pattern_trans.fig');
-saveas(f1,'u1_pattern_trans.png');
+saveas(f1,[folder,'u1_pattern_trans.fig']);
+saveas(f1,[folder,'u1_pattern_trans.png']);
 
 %%
 % f2=figure; surf(x,categorical(eta),v1,'linestyle','none')
@@ -296,8 +295,8 @@ saveas(f1,'u1_pattern_trans.png');
 % set(gca,'ytick',categorical(axx))
 % ax = gca; 
 % ax.FontSize = 16; 
-% saveas(f2,'v1_pattern_trans.fig');
-% saveas(f2,'v1_pattern_trans.png');
+% saveas(f2,[folder,'v1_pattern_trans.fig']);
+% saveas(f2,[folder,'v1_pattern_trans.png']);
 
 %%
 f3=figure; surf(x,categorical(eta),u2,'linestyle','none')
@@ -310,8 +309,8 @@ colorbar
 set(gca,'ytick',categorical(axx))
 ax = gca; 
 ax.FontSize = 16; 
-saveas(f3,'u2_pattern_trans.fig');
-saveas(f3,'u2_pattern_trans.png');
+saveas(f3,[folder,'u2_pattern_trans.fig']);
+saveas(f3,[folder,'u2_pattern_trans.png']);
 
 %%
 % f4=figure; surf(x,categorical(eta),v2,'linestyle','none')
@@ -324,8 +323,8 @@ saveas(f3,'u2_pattern_trans.png');
 % set(gca,'ytick',categorical(axx))
 % ax = gca; 
 % ax.FontSize = 16; 
-% saveas(f4,'v2_pattern_trans.fig');
-% saveas(f4,'v2_pattern_trans.png');
+% saveas(f4,[folder,'v2_pattern_trans.fig']);
+% saveas(f4,[folder,'v2_pattern_trans.png']);
 
 %%
 fprintf('\nDone!\n');
