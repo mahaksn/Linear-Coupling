@@ -18,8 +18,6 @@ drawperframe=200;
 pattern=1; % Pattern fully developed at..
 
 Schnakenberg=1;
-CDIMA=0;
-Brusselator=0;
 
 case1=0;
 case2=1;
