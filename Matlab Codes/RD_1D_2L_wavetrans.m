@@ -245,7 +245,7 @@ for ti=1:1:nt
         pattern=0;
         fprintf(' pattern fully developed at %.5f\n',t);
         tend=tend/dt+1;
-        stopti=ti+tend;
+        stopti=ceil(ti+tend);
     end
     
     if ti==stopti
