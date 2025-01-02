@@ -20,7 +20,9 @@ pattern=1; % Pattern fully developed at..
 Schnakenberg=1;
 
 case1=0;
-case2=1;
+case2=0;
+case7=0;
+case8=1;
 
 %% set the parameters which govern equation
 if Schnakenberg
@@ -39,8 +41,26 @@ elseif case2
     RD=[RD,'_','case2'];
     a=sym(0.05); b=sym(1.4);
     aU=a; bU=b; aL=a; bL=b;
-    DuU=sym(1); DvU=sym(50);
-    DuL=sym(40); DvL=sym(800);
+    DuU=1; DvU=50;
+    DuL=40; DvL=800;
+    L=130;
+    eta_end=10;
+    kplus=1;
+elseif case7
+    RD=[RD,'_','case7'];
+    a=0.15; b=1.3;
+    aU=a; bU=b; aL=a; bL=b;
+    DuU=1; DvU=60;
+    DuL=50; DvL=1500;
+    L=130;
+    eta_end=10;
+    kplus=1;
+elseif case8
+    RD=[RD,'_','case8'];
+    a=0.04; b=1.2;
+    aU=a; bU=b; aL=a; bL=b;
+    DuU=1; DvU=40;
+    DuL=60; DvL=900;
     L=130;
     eta_end=10;
     kplus=1;
@@ -155,9 +175,9 @@ eta0=linspace(0,eta_end,nn)';
 Mr=dispersion(CPy,k,eta,k0,eta0);
 f1=figure; 
 surf(k0,eta0,Mr,'linestyle','none');
-xlabel('$k$','Interpreter','latex')
-ylabel('$\eta$','Interpreter','latex')
-title('max(Re(\lambda))')
+xlabel('k')
+ylabel('\eta')
+title('Max(Re(\lambda))')
 clim([-0.1,0.1])
 view(2)
 shading interp
@@ -166,8 +186,8 @@ ax.FontSize = 16;
 
 cmap_colorbar()
 
-saveas(f1,'DCy(k,eta).fig');
-saveas(f1,'DCy(k,eta).png');
+saveas(f1,[folder,'DCy(k,eta).fig']);
+saveas(f1,[folder,'DCy(k,eta).png']);
 
 %% Surface Graphs: y3, y2, y1, y0, ybeta-yb, ygamma-yg
 clear RHv
@@ -180,20 +200,20 @@ eta0=linspace(0,eta_end,nn)';
 
 f2=figure; 
 surf(k00,eta00,RHv,'linestyle','none')
-xlabel('$k$','Interpreter','latex')
-ylabel('$\eta$','Interpreter','latex')
-zlabel('$y_0(k,\eta)$','Interpreter','latex')
-title('{\boldmath$y_0(k,\eta)$}','Interpreter','latex')
+xlabel('k')
+ylabel('\eta')
+zlabel('y_{0}(k,\eta)')
+title('y_{0}(k,\eta)')
 clim([-1,1])
 % view(2)
 shading interp
 ax = gca; 
-ax.FontSize = 24;
+ax.FontSize = 18;
 
 cmap_colorbar()
 
-saveas(f2,'y_0(k,eta).fig'); % y3 % y2 % y1 % yb % yg
-saveas(f2,'y_0(k,eta).png');
+saveas(f2,[folder,'y_0(k,eta).fig']); % y3 % y2 % y1 % yb % yg
+saveas(f2,[folder,'y_0(k,eta).png']);
 
 %% discriminant
 y0h=subs(y0,k,sqrt(h));
@@ -209,6 +229,7 @@ p1=find(e_disc(p)>0);
 erp=er(p1);
 disp('Roots of the discriminant are:')
 disp(erp)
+ERP=round(erp,2);
 erp=[0 erp' 10];
 erp=round(erp,2);
 erpP=solve(P==0,eta);
@@ -221,74 +242,74 @@ erpD=solve(D==0,eta);
 clear Mr Mi
 nn=100;
 k0=linspace(0,kplus,nn)';
-e1=linspace(0,0.17,0.1*nn);
-e2=linspace(0.17,0.43,0.1*nn+1);
-e3=linspace(0.43,1.41,0.2*nn+1);
-e4=linspace(1.41,3.77,0.2*nn+1);
-e5=linspace(3.77,10,0.4*nn+1);
+e1=linspace(0,ERP(1),0.1*nn);
+e2=linspace(ERP(1),ERP(2),0.1*nn+1);
+e3=linspace(ERP(2),ERP(3),0.2*nn+1);
+e4=linspace(ERP(3),ERP(4),0.2*nn+1);
+e5=linspace(ERP(4),10,0.4*nn+1);
 eta0s=[e1 e2(2:end) e3(2:end) e4(2:end) e5(2:end)]'; % 
 
 Mr=dispersion(CPy,k,eta,k0,eta0s);
-axx=[0,0.17,0.43,1.41,3.77,10]; 
+% axx=erp; 
 f3=figure; 
 surf(k0,categorical(eta0s),Mr,'linestyle','none');
-xlabel('$k$','Interpreter','latex')
-ylabel('$\eta$','Interpreter','latex')
-title('max(Re(\lambda))')
+xlabel('k')
+ylabel('\eta')
+title('Max(Re(\lambda))')
 clim([-0.1,0.1])
 view(2)
 shading interp
-set(gca,'ytick',categorical(axx))
+set(gca,'ytick',categorical(erp))
 ax = gca; 
 ax.FontSize = 16;
 
-yline(categorical(0.17),'r--','Linewidth',2)
-yline(categorical(0.43),'r--','Linewidth',2)
-yline(categorical(1.41),'r--','Linewidth',2)
-yline(categorical(3.77),'r--','Linewidth',2)
+yline(categorical(ERP(1)),'r--','Linewidth',2)
+yline(categorical(ERP(2)),'r--','Linewidth',2)
+yline(categorical(ERP(3)),'r--','Linewidth',2)
+yline(categorical(ERP(4)),'r--','Linewidth',2)
 
 cmap_colorbar()
 
-saveas(f3,'DCy(k,eta)_scaled.fig');
-saveas(f3,'DCy(k,eta)_scaled.png');
+saveas(f3,[folder,'DCy(k,eta)_shrunk.fig']);
+saveas(f3,[folder,'DCy(k,eta)_shrunk.png']);
 
 %% y_0(k,eta): Scaled
 clear RHv
 y0k=subs(y0,h,k^2);
 nn=500;
 k0=linspace(0,kplus,nn)';
-e1=linspace(0,0.17,0.1*nn);
-e2=linspace(0.17,0.43,0.1*nn+1);
-e3=linspace(0.43,1.41,0.2*nn+1);
-e4=linspace(1.41,3.77,0.2*nn+1);
-e5=linspace(3.77,10,0.4*nn+1);
+e1=linspace(0,ERP(1),0.1*nn);
+e2=linspace(ERP(1),ERP(2),0.1*nn+1);
+e3=linspace(ERP(2),ERP(3),0.2*nn+1);
+e4=linspace(ERP(3),ERP(4),0.2*nn+1);
+e5=linspace(ERP(4),10,0.4*nn+1);
 eta0s=[e1 e2(2:end) e3(2:end) e4(2:end) e5(2:end)]'; % 
 
 [RHv,k00,eta00]=ycoeff(y0k,k0,eta0s);
 
 f4=figure; 
 surf(k00,categorical(eta00),RHv,'linestyle','none')
-xlabel('$k$','Interpreter','latex')
-ylabel('$\eta$','Interpreter','latex')
-zlabel('$y_0(k,\eta)$','Interpreter','latex')
-title('{\boldmath$y_0(k,\eta)$}','Interpreter','latex')
+xlabel('k')
+ylabel('\eta')
+zlabel('y_{0}(k,\eta)')
+title('y_{0}(k,\eta)')
 clim([-1,1])
 view(2)
 shading interp
-axx=[0,0.17,0.43,1.41,3.77,10];
-set(gca,'ytick',categorical(axx))
+% axx=[0,0.17,0.43,1.41,3.77,10];
+set(gca,'ytick',categorical(erp))
 ax = gca; 
 ax.FontSize = 18;
 
-yline(categorical(0.17),'r--','Linewidth',2)
-yline(categorical(0.43),'r--','Linewidth',2)
-yline(categorical(1.41),'r--','Linewidth',2)
-yline(categorical(3.77),'r--','Linewidth',2)
+yline(categorical(ERP(1)),'r--','Linewidth',2)
+yline(categorical(ERP(2)),'r--','Linewidth',2)
+yline(categorical(ERP(3)),'r--','Linewidth',2)
+yline(categorical(ERP(4)),'r--','Linewidth',2)
 
 cmap_colorbar()
 
-saveas(f4,'y_0(k,eta)_scaled.fig');
-saveas(f4,'y_0(k,eta)_scaled.png');
+saveas(f4,[folder,'y_0(k,eta)_shrunk.fig']);
+saveas(f4,[folder,'y_0(k,eta)_shrunk.png']);
 
 %% Dispersion curves at different \eta values
 clear Mr Mi
@@ -308,15 +329,14 @@ f5=figure;
 hold on
 plot(k0,Mr,'Linewidth',3);
 yline(0,'r--','HandleVisibility', 'off','Linewidth',3);
-xlabel('$k$','Interpreter','latex');
-ylabel('max(Re(\lambda))');
-title(['\eta=',num2str(erp(j))])
+xlabel('k','FontSize',16);
+ylabel('max(Re(\lambda))','FontSize',16);
+title(['\eta=',num2str(erp(j))],'FontSize',16)
 ylim([-1.5,0.5])
-xlim([0,1])
 ax = gca; 
-ax.FontSize = 18;
-saveas(f5,['eta=',num2str(erp(j)),'.fig']);
-saveas(f5,['eta=',num2str(erp(j)),'.png']);
+ax.FontSize = 16;
+saveas(f5,[folder,'eta=',num2str(erp(j)),'.fig']);
+saveas(f5,[folder,'eta=',num2str(erp(j)),'.png']);
 end
 
 %% Reduced polynomials
@@ -334,36 +354,41 @@ y0_43dh=sum(cfsy0h(3:end).*hs5(3:end));
 
 %% y_0(k,eta): reduced y0_4d, y0_3d, y0_43d
 clear RHv
-y0k=subs(y0_4dh,h,k^2); % y0_3dh % y0_43dh
+y0k=subs(y0_4dh,h,k^2); % y0_4dh % y0_3dh % y0_43dh
 nn=500;
 k0=linspace(0,kplus,nn)';
-e1=linspace(0,0.17,0.1*nn);
-e2=linspace(0.17,0.43,0.1*nn+1);
-e3=linspace(0.43,1.41,0.2*nn+1);
-e4=linspace(1.41,3.77,0.2*nn+1);
-e5=linspace(3.77,10,0.4*nn+1);
+e1=linspace(0,ERP(1),0.1*nn);
+e2=linspace(ERP(1),ERP(2),0.1*nn+1);
+e3=linspace(ERP(2),ERP(3),0.2*nn+1);
+e4=linspace(ERP(3),ERP(4),0.2*nn+1);
+e5=linspace(ERP(4),10,0.4*nn+1);
 eta0s=[e1 e2(2:end) e3(2:end) e4(2:end) e5(2:end)]'; % 
 
 [RHv,k00,eta00]=ycoeff(y0k,k0,eta0s);
 
 f6=figure; 
 surf(k00,categorical(eta00),RHv,'linestyle','none')
-xlabel('$k$','Interpreter','latex')
-ylabel('$\eta$','Interpreter','latex')
+xlabel('k')
+ylabel('\eta')
 % zlabel('y_{r_0}(k,\eta)')
 % title('y_{r_0}(k,\eta)')
 clim([-1,1])
 view(2)
 shading interp
-axx=[0,0.17,0.43,1.41,3.77,10]; %
-set(gca,'ytick',categorical(axx))
+% axx=[0,0.17,0.43,1.41,3.77,10]; %
+set(gca,'ytick',categorical(erp))
 ax = gca; 
 ax.FontSize = 18;
 
+yline(categorical(ERP(1)),'r--','Linewidth',2)
+yline(categorical(ERP(2)),'r--','Linewidth',2)
+yline(categorical(ERP(3)),'r--','Linewidth',2)
+yline(categorical(ERP(4)),'r--','Linewidth',2)
+
 cmap_colorbar()
 
-saveas(f6,'y_0_4d(k,eta).fig'); % y0_3d % y0_43d
-saveas(f6,'y_0_4d(k,eta).png'); % y0_3d % y0_43d
+saveas(f6,[folder,'y_0_4d(k,eta).fig']); % y0_3d % y0_43d
+saveas(f6,[folder,'y_0_4d(k,eta).png']); % y0_3d % y0_43d
 
 %% Comparison Graph
 nn=250;
@@ -390,7 +415,7 @@ hold on
 plot(k0,sss,'--','LineWidth',3)
 
 ylim([-1000,1000])
-xlabel('$k$','Interpreter','latex')
+xlabel('k')
 % ylabel('y_{r_0}')
 title('\eta=10')
 xlim([0,1])
@@ -399,36 +424,8 @@ legend('y_0','Removed 4^{th} degree', ...
     'Removed 3^{rd} degree','Removed both 4^{th} and 3^{rd} degree')
 ax = gca; 
 ax.FontSize = 16;
-saveas(f7,'Compare_y0.fig');
-saveas(f7,'Compare_y0.png');
-
-%% Dispersion relation: Reduced
-CPyh=subs(CPy,k,sqrt(h));
-[cfsCPyh,yCPyyh]=coeffs(CPyh,y);
-cfsCPyh(end)=y0_43dh;
-CPred=sum(cfsCPyh.*yCPyyh);
-CPredk=subs(CPred,h,k^2);
-disp('Reduced Dispersion relation')
-disp(CPredk)
-
-% clear Mr
-% nn=100;
-% k0=linspace(0,kplus,nn)';
-% eta0=linspace(0,eta_end,nn)';
-% 
-% Mr=dispersion(CPredk,k,eta,k0,eta0);
-% 
-% f2=figure; 
-% surf(k0,eta0,Mr,'linestyle','none');
-% xlabel('$k$','Interpreter','latex')
-% ylabel('$\eta$','Interpreter','latex')
-% title('Reduced Dispersion relation')
-% clim([-0.1,0.1])
-% view(2)
-% shading interp
-% ax = gca; 
-% ax.FontSize = 16;
-% cmap_colorbar()
+saveas(f7,[folder,'Compare_y0.fig']);
+saveas(f7,[folder,'Compare_y0.png']);
 
 %%
 fprintf('\nDone!\n');
